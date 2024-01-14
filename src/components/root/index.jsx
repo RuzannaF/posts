@@ -1,9 +1,16 @@
 import React from "react";
 import { Outlet } from 'react-router-dom';
+import { Menu, MenuItem } from './styles'
+import { Container } from "../сontainer";
 
 export const Root = () => <>
-<div>
-    Это будущее меню
-</div>
+<Container>
+<Menu>
+   <MenuItem to={'/'}>Главная</MenuItem>
+   <MenuItem to={'posts'}>Список постов</MenuItem>
+   <MenuItem to={'auth'}>Авторизация</MenuItem>
+   <MenuItem to={'registration'}>Регистрация</MenuItem>
+</Menu>
+</Container>
 <Outlet />
 </>
