@@ -4,9 +4,11 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import { Provider } from "react-redux"
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { store } from './redux/store';
 import { Posts } from './pages/posts';
 import { Root } from './components/root';
 import { DetailPost } from './pages/posts/detail';
@@ -55,7 +57,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+     <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
 
