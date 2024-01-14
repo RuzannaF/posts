@@ -9,13 +9,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { store } from './redux/store';
-import { Posts } from './pages/posts';
+import { PostsPage } from './pages/posts';
 import { Root } from './components/root';
 import { DetailPost } from './pages/posts/detail';
 import { EditPost } from './pages/posts/edit';
 import { AddPost } from './pages/posts/add';
-import { Auth } from './pages/auth';
-import { Registration } from './pages/registertration';
+import { AuthPage } from './pages/auth';
+import { RegistrationPage } from './pages/registertration';
 
 const router = createBrowserRouter([
   {
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'posts',
-        element: <Posts />,
+        element: <PostsPage />,
       },
       {
         path: 'posts/:id',
@@ -44,11 +44,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'auth',
-        element: <Auth />
+        element: <AuthPage />
       },
       {
         path: 'registration',
-        element: <Registration />
+        element: <RegistrationPage />
       }
     ]
   },

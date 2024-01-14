@@ -1,6 +1,7 @@
 import React from 'react';
 import { Posts } from '../../components/posts';
 import { Container } from '../../components/сontainer';
+import * as SC from './styles'
 
 const INITIAL_POST = [
     {
@@ -20,8 +21,9 @@ const INITIAL_POST = [
     },
   ]
 
-export const Main = () => (
+export const MainPage = () => (
     <Container>
+      <SC.Title>Свежие публикации</SC.Title>
       <Posts posts={INITIAL_POST} />
     </Container>
 )
