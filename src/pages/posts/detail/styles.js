@@ -12,8 +12,8 @@ export const Text = styled.div`
 `
 
 export const LinkWrapper = styled.div`
-    text-align: center
-    margin-top: 15px 
+    text-align: center;
+    margin-top: 15px;
 `
 
 export const BacklLink = styled(Link)`

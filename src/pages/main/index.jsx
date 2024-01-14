@@ -1,29 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Posts } from '../../components/posts';
+import { Post } from '../../components/posts/post';
 import { Container } from '../../components/сontainer';
 import * as SC from './styles'
+import { useSelector, useDispatch } from 'react-redux';
+import { getFreshPosts } from '../../redux/slices/postsSlice';
 
-const INITIAL_POST = [
-    {
-      id: 1,
-      title: '1 post',
-      image: 'https://www.reclamare.ua/wp-content/uploads/2015/10/today-trainee-tomorrow.jpg'
-    },
-    {
-      id: 2,
-      title: '2 post',
-      image: 'https://habrastorage.org/r/w1560/webt/s7/gh/43/s7gh43i88dmawmqioyllqf4ho5q.png'
-    },
-    {
-      id: 3,
-      title: '3 post',
-      image: 'https://blog.skillfactory.ru/wp-content/uploads/2023/02/frontend-2-2058753.jpg'
-    },
-  ]
-
-export const MainPage = () => (
+export const MainPage = () => {
+  const postForView = useSelector((state) => state.posts.postForView)
+  const freshPosts = useSelector((state) => state.posts.freshPosts)
+  const dispatch = useDispatch()
+  
+  useEffect(() => {
+    dispatch(getFreshPosts())
+  }, [])
+  return (
     <Container>
-      <SC.Title>Свежие публикации</SC.Title>
-      <Posts posts={INITIAL_POST} />
+      {freshPosts && <>
+        <SC.Title>Свежие публикации</SC.Title>
+        <Posts posts={freshPosts} />
+      </>
+      }
+      {postForView && <>
+        <SC.Title>Последний просмотренный пост</SC.Title>
+        <Post post={postForView} />
+      </>
+      }
     </Container>
-)
+  )
+}
