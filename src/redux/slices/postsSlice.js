@@ -1,58 +1,103 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { postsApi } from '../../api/postsApi'
+
+export const getPostByID = createAsyncThunk(
+  'posts/fetchById',
+    async (postId) => {
+      return await postsApi.fetchById(postId)
+     }
+  )
+
+  export const getPosts = createAsyncThunk(
+    'posts/fetchPosts',
+      async () => {
+        return await postsApi.fetchPosts()
+       }
+    )
+
+  export const getFreshPosts = createAsyncThunk(
+      'posts/fetchFreshPosts',
+        async (limit) => {
+          return await postsApi.fetchFreshPosts(limit)
+         }
+  )
 
 const initialState = {
-  list: [
-    {
-      id: 1,
-      title: '1 post',
-      image: 'https://www.reclamare.ua/wp-content/uploads/2015/10/today-trainee-tomorrow.jpg',
-      text: 'Lorem, ipsum dolor',
-    },
-    {
-      id: 2,
-      title: '2 post',
-      image: 'https://habrastorage.org/r/w1560/webt/s7/gh/43/s7gh43i88dmawmqioyllqf4ho5q.png',
-      text: 'Lorem, ipsum dolor',
-    },
-    {
-      id: 3,
-      title: '3 post',
-      image: 'https://blog.skillfactory.ru/wp-content/uploads/2023/02/frontend-2-2058753.jpg',
-      text: 'Lorem, ipsum dolor',
-    },
-    {
-      id: 4,
-      title: '4 post',
-      image: 'https://blog.skillfactory.ru/wp-content/uploads/2023/02/frontend-2-2058753.jpg',
-      text: 'Lorem, ipsum dolor',
-    },
-  ],
-  postForView: null,
-  freshPosts: null,
+  posts: {
+    list: null,
+    loading: false,
+  },
+  postForView: {
+    post: null,
+    loading: false,
+  },
+  freshPosts: {
+    posts: null,
+    loading: true,
+  },
 }
 
 export const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    setPosts: (state, action) => {
-      state.posts = action.payload
-    },
     editPost: (state, action) => {
 
     },
-    getPost: (state, action) => {
-      state.postForView = state.list.find((item) => item.id === action.payload)
-    },
-    getFreshPosts: (state, action) => {
-      state.freshPosts = state.list.slice(0, 3)
-    },
     addPost: (state, action) => {
-      
+      const newPost = {...action.payload}
+      newPost.id = new Date().getTime()
+      state.posts.list = state.posts.list ? [newPost,...state.posts.list] : [newPost]
+    },
+    showPost: (state, action) => {
+      state.postForView =  {
+        post: action.payload,
+        loading: false,
+      }   
     },
   },
+
+  extraReducers: (builder) => {
+    builder
+    .addCase(getPostByID.pending, (state) => {
+      state.postForView =  {
+        post: null,
+        loading: true,
+      }
+    })
+    .addCase(getPostByID.fulfilled, (state, action) => {
+      state.postForView =  {
+        post: action.payload,
+        loading: false,
+      }
+    })
+    .addCase(getPosts.pending, (state) => {
+      state.posts =  {
+        list: null,
+        loading: true,
+      }
+    })
+    .addCase(getPosts.fulfilled, (state, action) => {
+      state.posts =  {
+        list: action.payload,
+        loading: false,
+      }
+    })
+    .addCase(getFreshPosts.pending, (state) => {
+      state.freshPosts =  {
+        posts: null,
+        loading: true,
+      }
+    })
+    .addCase(getFreshPosts.fulfilled, (state, action) => {
+      state.freshPosts =  {
+        posts: action.payload,
+        loading: false,
+      }
+    })
+  }
 })
 
-export const { setPosts, editPost, getPost, getFreshPosts } = postsSlice.actions
+export const { addPost, editPost, showPost } = postsSlice.actions
 
 export default postsSlice.reducer

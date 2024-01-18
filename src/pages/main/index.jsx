@@ -7,18 +7,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getFreshPosts } from '../../redux/slices/postsSlice';
 
 export const MainPage = () => {
-  const postForView = useSelector((state) => state.posts.postForView)
-  const freshPosts = useSelector((state) => state.posts.freshPosts)
+  const postForView = useSelector((state) => state.posts.postForView.post)
+  const { posts } = useSelector((state) => state.posts.freshPosts)
   const dispatch = useDispatch()
-  
+
   useEffect(() => {
     dispatch(getFreshPosts())
   }, [])
   return (
     <Container>
-      {freshPosts && <>
+      {posts && <>
         <SC.Title>Свежие публикации</SC.Title>
-        <Posts posts={freshPosts} />
+        <Posts posts={posts} />
       </>
       }
       {postForView && <>
