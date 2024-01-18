@@ -8,6 +8,7 @@ export const Root = () => <>
 <Menu>
    <MenuItem to={'/'}>Главная</MenuItem>
    <MenuItem to={'posts'}>Список постов</MenuItem>
+   <MenuItem to={'posts/add'}>Добавление поста</MenuItem>
    <MenuItem to={'auth'}>Авторизация</MenuItem>
    <MenuItem to={'registration'}>Регистрация</MenuItem>
 </Menu>
