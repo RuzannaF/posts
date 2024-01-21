@@ -40,6 +40,7 @@ export const DetailPost = () => {
             <div style={{ clear: 'both' }} />
             <SC.LinkWrapper>
                 <SC.BacklLink to={'/posts'}>Обратно к публикациям</SC.BacklLink>
+                <SC.BacklLink to={`/post/${id}/edit`}>Редактировать</SC.BacklLink>
             </SC.LinkWrapper>
         </Container>
     )
