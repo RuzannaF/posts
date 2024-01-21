@@ -17,6 +17,7 @@ export const LinkWrapper = styled.div`
     display: flex;
     gap: 15px;
     justify-content: center;
+    align-items: center;
 `
 
 export const BacklLink = styled(Link)`
