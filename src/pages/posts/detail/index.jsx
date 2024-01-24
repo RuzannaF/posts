@@ -52,7 +52,7 @@ export const DetailPost = () => {
             <SC.LinkWrapper>
                 <SC.BacklLink to={'/posts'}>Обратно к публикациям</SC.BacklLink>
                 {list && <SC.BacklLink to={`/post/${id}/edit`}>Редактировать</SC.BacklLink>}
-                {list && <Button buttonClassName={'attention'} onClick={() => setSelectPost(post)}>Удалить</Button>}
+                {list && <Button className={'attention'} onClick={() => setSelectPost(post)}>Удалить</Button>}
             </SC.LinkWrapper>
         </Container>
     )

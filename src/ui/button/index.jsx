@@ -1,9 +1,9 @@
 import React from 'react'
 import * as SC from './styles'
 
-export const Button = ({ children, buttonClassName, onClick }) => {
+export const Button = ({ children, ...props }) => {
     return (
-      <SC.Button className={buttonClassName} onClick={onClick}>
+      <SC.Button {...props}>
         {children}
       </SC.Button>
     )
