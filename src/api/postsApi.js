@@ -3,7 +3,7 @@ export const postsApi = {
 
     fetchPosts() {
         try {
-            return fetch(`https://jsonplaceholder.typicode.com/posts?_limit=5`)
+            return fetch(`https://jsonplaceholder.typicode.com/posts`)
             .then((response) => response.json())
             .then((posts) => posts) 
         } catch (ex) {

@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Container } from '../../../../components/сontainer'
 import { Typo } from '../../../../components/Typo'
 import * as SC from './styles'
+import { Form } from '../../../../components/Form'
+import { Button } from '../../../../ui/button'
 
 
 const DEFAULT_VALUES = {title: '', body: ''}
@@ -24,7 +26,7 @@ export const PostForm = ({title, onSubmitForm, defaultValues}) => {
 
     return (
         <Container>
-            <SC.Form onSubmit={onSubmit}>
+            <Form onSubmit={onSubmit}>
                 <Typo>{title}</Typo>
                 <SC.Field>
                     <SC.Input
@@ -45,8 +47,8 @@ export const PostForm = ({title, onSubmitForm, defaultValues}) => {
                         onChange={(e) => onChange(e.target.name, e.target.value)}
                     />
                 </SC.Field>
-                <SC.Button type='submit' disabled={disabled}>Сохранить</SC.Button>
-            </SC.Form>
+                <Button type='submit' disabled={disabled} className={'regular'}>Сохранить</Button>
+            </Form>
         </Container>
     )
 }
