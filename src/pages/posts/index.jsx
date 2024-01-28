@@ -6,6 +6,7 @@ import { Posts } from "../../components/posts";
 import * as SC from './styles';
 import { getPosts } from "../../redux/slices/postsSlice";
 import Pagination from "../../components/pagination";
+import { Loader } from "../../components/Loader";
 
 const POSTS_PER_PAGE = 6
 
@@ -38,7 +39,7 @@ export const PostsPage = () => {
   }
 
   if(!list && loading) {
-    return <Container>Loading...</Container>
+    return <Loader />
   }
 
   if(!list) {

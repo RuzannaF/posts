@@ -7,6 +7,7 @@ import { Typo } from '../../components/Typo'
 import * as SC from './styles'
 import { useSelector, useDispatch } from 'react-redux';
 import { getFreshPosts } from '../../redux/slices/postsSlice';
+import { Loader } from '../../components/Loader';
 
 export const MainPage = () => {
   const postForView = useSelector((state) => state.posts.postForView.post)

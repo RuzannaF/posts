@@ -3,10 +3,12 @@ import { Typo } from "../../components/Typo";
 import { Form } from "../../components/Form";
 import { Input } from "../../components/Input";
 import { Button } from "../../ui/button";
+import { useNavigate } from "react-router";
 
 export const RegistrationPage = () => {
     const [formValues, setFormValues] = useState({name:'', surname:'', email:'', password:''})
     const userId = Date.now()
+    const navigate = useNavigate()
     const onSubmit = (e) => {
         e.preventDefault()
         try {
@@ -24,6 +26,10 @@ export const RegistrationPage = () => {
             users.push({id: userId, ...formValues})
 
             localStorage.setItem('users', JSON.stringify(users))
+
+            console.log(users)
+
+            navigate('/posts')
            
         } catch(e) {
             console.log(e)
@@ -33,6 +39,8 @@ export const RegistrationPage = () => {
     const onChange = (name, value) => {
         setFormValues({...formValues, [name]: value})
     }
+
+    const disabled = !formValues.name || !formValues.surname || !formValues.email || !formValues.password
 
     return (
         <Form onSubmit={onSubmit}>
@@ -65,7 +73,7 @@ export const RegistrationPage = () => {
                 value={formValues.password}
                 onChange={(e) => onChange(e.target.name, e.target.value)}
             />
-            <Button type='submit'>Регистрация</Button>
+            <Button type='submit' disabled={disabled}>Регистрация</Button>
         </Form>
     )
 }

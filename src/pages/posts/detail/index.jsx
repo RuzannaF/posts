@@ -7,8 +7,10 @@ import { Container } from "../../../components/сontainer";
 import * as SC from './styles'
 import { Button } from "../../../ui/button";
 import { Modal } from "../../../ui/modal";
+import { Loader } from "../../../components/Loader";
 
 export const DetailPost = () => {
+    const { user } = useSelector((state) => state.auth)
     const { id } = useParams()
     const { list } = useSelector((state) => state.posts.posts)
     const postForView = useSelector((state) => state.posts.postForView)
@@ -33,7 +35,7 @@ export const DetailPost = () => {
     }, [id, list, dispatch])
 
     if (postForView.loading) {
-        return <Container>Loading...</Container>
+        return <Loader />
     }
 
     const post = postForView ? postForView.post : null
@@ -51,8 +53,8 @@ export const DetailPost = () => {
             <div style={{ clear: 'both' }} />
             <SC.LinkWrapper>
                 <SC.BacklLink to={'/posts'}>Обратно к публикациям</SC.BacklLink>
-                {list && <SC.BacklLink to={`/post/${id}/edit`}>Редактировать</SC.BacklLink>}
-                {list && <Button className={'attention'} onClick={() => setSelectPost(post)}>Удалить</Button>}
+                {list && user && <SC.BacklLink to={`/post/${id}/edit`}>Редактировать</SC.BacklLink>}
+                {list && user && <Button className={'attention'} onClick={() => setSelectPost(post)}>Удалить</Button>}
             </SC.LinkWrapper>
         </Container>
     )
