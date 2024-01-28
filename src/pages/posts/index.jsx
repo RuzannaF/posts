@@ -13,24 +13,27 @@ const POSTS_PER_PAGE = 6
 export const PostsPage = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(0)
-  
-  const {list, loading} = useSelector((state) => state.posts.posts)
-  
+  const [filterValue, setFilterValue] = useState('AZ')
+  const [searchValue, setSearchValue] = useState('')
+
+
+  const { list, loading } = useSelector((state) => state.posts.posts)
+
   const dispatch = useDispatch()
   const lastIndex = (currentPage * POSTS_PER_PAGE)
   const firstIndex = lastIndex - POSTS_PER_PAGE
-   
+
 
   const newTotalPage = () => {
     if (list) {
-      const newTotal = Math.ceil(list.length/POSTS_PER_PAGE)
+      const newTotal = Math.ceil(list.length / POSTS_PER_PAGE)
       setTotalPages(newTotal)
     }
   }
   useEffect(() => {
     if (!list) {
       dispatch(getPosts())
-    } 
+    }
     newTotalPage()
   }, [list, dispatch, currentPage])
 
@@ -38,19 +41,51 @@ export const PostsPage = () => {
     setCurrentPage(page)
   }
 
-  if(!list && loading) {
+  if (!list && loading) {
     return <Loader />
   }
 
-  if(!list) {
+  if (!list) {
     return <div>404</div>
   }
 
+  const onFilterChange = (e) => {
+    setFilterValue(e.target.value)
+  }
+
+  const onSearchChange = (e) => {
+    setSearchValue(e.target.value)
+  }
+
+  const filteredPosts = list.filter(post => {
+    if (searchValue && !post.title.toLowerCase().includes(searchValue.toLowerCase())) {
+      return false
+    }
+    return true;
+  }).sort((a, b) => {
+    if (filterValue === 'AZ') {
+      return a.title.localeCompare(b.title)
+    } else {
+      return b.title.localeCompare(a.title)
+    }
+  })
+
   return (
-  <Container>
-    <SC.Title>Посты</SC.Title>
-    {list && <Posts posts={list.slice(firstIndex, lastIndex)} />}
-    <Pagination totalPages={totalPages} currentPage={currentPage} changeCurrentPage={changeCurrentPage} />
-  </Container>
+    <Container>
+      <SC.Title>Посты</SC.Title>
+      <Input
+        placeholder='заголовок поста'
+        value={searchValue}
+        onChange={onSearchChange}
+        type='text'
+        name='title'
+      />
+      <select onChange={onFilterChange} value={filterValue}>
+        <option value="AZ">От А до Z</option>
+        <option value="ZA">От Z до A</option>
+      </select>
+      {filteredPosts && <Posts posts={filteredPosts.slice(firstIndex, lastIndex)} />}
+      <Pagination totalPages={totalPages} currentPage={currentPage} changeCurrentPage={changeCurrentPage} />
+    </Container>
   )
 }
