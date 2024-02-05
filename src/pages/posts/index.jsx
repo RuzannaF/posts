@@ -4,7 +4,7 @@ import { Container } from "../../components/сontainer";
 import { Input } from "../../components/Input";
 import { Posts } from "../../components/posts";
 import * as SC from './styles';
-import { getPosts } from "../../redux/slices/postsSlice";
+import { getPosts, getFilteredPosts } from "../../redux/slices/postsSlice";
 import Pagination from "../../components/pagination";
 import { Loader } from "../../components/Loader";
 
@@ -15,7 +15,7 @@ export const PostsPage = () => {
   const [totalPages, setTotalPages] = useState(0)
   const [filterValue, setFilterValue] = useState('AZ')
   const [searchValue, setSearchValue] = useState('')
-
+  const [sortedList, setSortedList] = useState([])
 
   const { list, loading } = useSelector((state) => state.posts.posts)
 
@@ -34,8 +34,21 @@ export const PostsPage = () => {
     if (!list) {
       dispatch(getPosts())
     }
-    newTotalPage()
-  }, [list, dispatch, currentPage])
+    if (list) {
+      const sorted = [...list]
+      if (filterValue === "AZ") {
+        sorted.sort((a, b) => a.title.localeCompare(b.title))
+      } else if (filterValue === "ZA") {
+        sorted.sort((a, b) => b.title.localeCompare(a.title))
+      }
+      setSortedList(sorted)
+      newTotalPage()
+    }
+  }, [list, dispatch, currentPage, filterValue])
+
+  useEffect(() => {
+    dispatch(getFilteredPosts(searchValue))
+  }, [dispatch, searchValue])
 
   const changeCurrentPage = (page) => {
     setCurrentPage(page)
@@ -57,19 +70,6 @@ export const PostsPage = () => {
     setSearchValue(e.target.value)
   }
 
-  const filteredPosts = list.filter(post => {
-    if (searchValue && !post.title.toLowerCase().includes(searchValue.toLowerCase())) {
-      return false
-    }
-    return true;
-  }).sort((a, b) => {
-    if (filterValue === 'AZ') {
-      return a.title.localeCompare(b.title)
-    } else {
-      return b.title.localeCompare(a.title)
-    }
-  })
-
   return (
     <Container>
       <SC.Title>Посты</SC.Title>
@@ -84,7 +84,7 @@ export const PostsPage = () => {
         <option value="AZ">От А до Z</option>
         <option value="ZA">От Z до A</option>
       </select>
-      {filteredPosts && <Posts posts={filteredPosts.slice(firstIndex, lastIndex)} />}
+      {sortedList && <Posts posts={sortedList.slice(firstIndex, lastIndex)} />}
       <Pagination totalPages={totalPages} currentPage={currentPage} changeCurrentPage={changeCurrentPage} />
     </Container>
   )

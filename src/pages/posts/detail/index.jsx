@@ -8,6 +8,7 @@ import * as SC from './styles'
 import { Button } from "../../../ui/button";
 import { Modal } from "../../../ui/modal";
 import { Loader } from "../../../components/Loader";
+import image from '../../../images/today-trainee.jpg';
 
 export const DetailPost = () => {
     const { user } = useSelector((state) => state.auth)
@@ -43,7 +44,6 @@ export const DetailPost = () => {
     if (!postForView || !post) {
       return <div>Пост не найден</div>
     }
-    const image = post.image || 'https://www.reclamare.ua/wp-content/uploads/2015/10/today-trainee-tomorrow.jpg'
     return (
         <Container>
             {selectPost && <Modal text={`Вы уверены, что хотите удалить пост ${id}?`} setSelectPost={setSelectPost} onClick={onDeletePost}/>}

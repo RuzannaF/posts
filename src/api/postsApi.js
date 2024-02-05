@@ -33,5 +33,15 @@ export const postsApi = {
       } catch (ex) {
         console.error(ex)
       }
-    }
+    },
+    fetchByFilter(server) {
+      try {
+        return fetch(`https://jsonplaceholder.typicode.com/posts?title_like=${server}`)
+          .then((response) => response.json())
+          .then((posts) => posts) 
+      } catch (ex) {
+          console.error(ex)
+        }
+  },
+    
   }
