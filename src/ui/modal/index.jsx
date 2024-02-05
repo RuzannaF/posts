@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from '../button'
 import * as SC from './styles'
-import { Container } from '../../components/сontainer'
+
 
 export const Modal = ({ text, onClick, setSelectPost }) => {
 

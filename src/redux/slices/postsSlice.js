@@ -22,6 +22,12 @@ export const getFreshPosts = createAsyncThunk(
   }
 )
 
+export const getFilteredPosts = createAsyncThunk(
+  'posts/fetchByFilter',
+  async (server) => {
+    return await postsApi.fetchByFilter(server);
+  }
+)
 const initialState = {
   posts: {
     list: null,
@@ -106,6 +112,15 @@ export const postsSlice = createSlice({
       .addCase(getFreshPosts.fulfilled, (state, action) => {
         state.freshPosts = {
           posts: action.payload,
+          loading: false,
+        }
+      })
+      .addCase(getFilteredPosts.pending, (state) => {
+        state.posts.loading = true;
+      })
+      .addCase(getFilteredPosts.fulfilled, (state, action) => {
+        state.posts = {
+          list: action.payload,
           loading: false,
         }
       })

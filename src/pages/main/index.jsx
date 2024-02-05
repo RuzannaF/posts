@@ -18,12 +18,9 @@ export const MainPage = () => {
   if (list) {
     postsFromList = list.slice(0,3)
   }
-
-  console.log(posts)
   
   useEffect(() => {
       dispatch(getFreshPosts())
-      console.log('work')
   }, [])
 
   if (postsFromList.length === 0 && isPostsFetched) {
