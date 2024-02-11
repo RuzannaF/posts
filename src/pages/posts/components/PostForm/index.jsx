@@ -6,14 +6,14 @@ import { Form } from '../../../../components/Form'
 import { Button } from '../../../../ui/button'
 
 
-const DEFAULT_VALUES = {title: '', body: ''}
+const DEFAULT_VALUES = { title: '', body: '' }
 
-export const PostForm = ({title, onSubmitForm, defaultValues}) => {
+export const PostForm = ({ title, onSubmitForm, defaultValues }) => {
 
     const [formValues, setFormValues] = useState(defaultValues || DEFAULT_VALUES)
 
     const onChange = (name, value) => {
-        setFormValues({...formValues, [name]: value})
+        setFormValues({ ...formValues, [name]: value })
     }
 
     const onSubmit = (e) => {

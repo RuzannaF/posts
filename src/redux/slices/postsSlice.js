@@ -127,6 +127,6 @@ export const postsSlice = createSlice({
   }
 })
 
-export const { addPost, editPost, showPost, deletePost, filterPosts } = postsSlice.actions
+export const { addPost, editPost, showPost, deletePost } = postsSlice.actions
 
 export default postsSlice.reducer

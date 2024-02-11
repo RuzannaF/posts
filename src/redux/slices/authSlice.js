@@ -14,9 +14,6 @@ export const authSlice = createSlice({
     logout: (state, action) => {
       state.user = null
     },
-    registerUser: (state, action) => {
-
-    },
   },
 })
 

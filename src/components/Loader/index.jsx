@@ -1,6 +1,6 @@
 import React from 'react'
 import * as SC from './styles'
 
-export const Loader = () => {
-    return <SC.Loader />
-}
+export const Loader = () => (
+    <SC.Loader />
+)
