@@ -21,8 +21,8 @@ export const Root = () => {
                <MenuItem to={'/'}>Главная</MenuItem>
                <MenuItem to={'posts'}>Список постов</MenuItem>
                {user && <MenuItem to={'posts/add'}>Добавление поста</MenuItem>}
-               {!user &&<MenuItem to={'auth'}>Авторизация</MenuItem>}
-               {!user &&<MenuItem to={'registration'}>Регистрация</MenuItem>}
+               {!user && <MenuItem to={'auth'}>Авторизация</MenuItem>}
+               {!user && <MenuItem to={'registration'}>Регистрация</MenuItem>}
                {user && <Button className={'regular'} onClick={exitButton}>Выход</Button>}
             </Menu>
          </Container>

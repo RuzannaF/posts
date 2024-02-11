@@ -69,7 +69,7 @@ export const PostsPage = () => {
   const onSearchChange = (e) => {
     setSearchValue(e.target.value)
   }
-
+  
   return (
     <Container>
       <SC.Title>Посты</SC.Title>

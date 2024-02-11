@@ -27,8 +27,6 @@ export const RegistrationPage = () => {
 
             localStorage.setItem('users', JSON.stringify(users))
 
-            console.log(users)
-
             navigate('/posts')
            
         } catch(e) {
