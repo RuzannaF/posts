@@ -7,6 +7,9 @@ import * as SC from './styles';
 import { getPosts, getFilteredPosts } from "../../redux/slices/postsSlice";
 import Pagination from "../../components/pagination";
 import { Loader } from "../../components/Loader";
+import { sortPosts } from "./sortPosts";
+import { filterByUserId } from "./filterByUserId";
+
 
 const POSTS_PER_PAGE = 6
 
@@ -16,6 +19,7 @@ export const PostsPage = () => {
   const [filterValue, setFilterValue] = useState('AZ')
   const [searchValue, setSearchValue] = useState('')
   const [sortedList, setSortedList] = useState([])
+  const [userId, setUserId] = useState('')
 
   const { list, loading } = useSelector((state) => state.posts.posts)
 
@@ -35,16 +39,14 @@ export const PostsPage = () => {
       dispatch(getPosts())
     }
     if (list) {
-      const sorted = [...list]
-      if (filterValue === "AZ") {
-        sorted.sort((a, b) => a.title.localeCompare(b.title))
-      } else if (filterValue === "ZA") {
-        sorted.sort((a, b) => b.title.localeCompare(a.title))
-      }
+      let filteredList = list
+      filteredList = filterByUserId(list, userId)
+      console.log(filteredList)
+      const sorted = sortPosts(filteredList, filterValue)
       setSortedList(sorted)
       newTotalPage()
     }
-  }, [list, dispatch, currentPage, filterValue])
+  }, [list, dispatch, currentPage, filterValue, userId])
 
   useEffect(() => {
     dispatch(getFilteredPosts(searchValue))
@@ -69,6 +71,12 @@ export const PostsPage = () => {
   const onSearchChange = (e) => {
     setSearchValue(e.target.value)
   }
+
+  const onUserChange = (e) => {
+    const value = e.target.value
+    setUserId(value === '' ? '' : Number(value))
+    console.log(userId)
+  }
   
   return (
     <Container>
@@ -79,6 +87,13 @@ export const PostsPage = () => {
         onChange={onSearchChange}
         type='text'
         name='title'
+      />
+      <Input
+        placeholder='UserId'
+        value={userId}
+        onChange={onUserChange}
+        type='text'
+        name='userId'
       />
       <select onChange={onFilterChange} value={filterValue}>
         <option value="AZ">От А до Z</option>
